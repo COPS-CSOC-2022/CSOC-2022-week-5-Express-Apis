@@ -108,7 +108,7 @@ const signup = async (req, res) => {
             const token =  createToken(newUser);
             token.save();
             console.log(hash);
-            res.status(200).send("Signed Up "+ req.body.username +" Succesfully "+hash);
+            res.status(200).send("Signed Up "+ req.body.username +" Succesfully Token:"+token.token);
           });
       });
         
