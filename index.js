@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const { ToDoRoutes, UserRoutes } = require("./routes");
+const middlewareObj = require("./middleware/token_auth");
 
 const app = express();
 
@@ -13,15 +14,30 @@ app.use(cors());
 
 // disable powered by cookies
 app.disable("x-powered-by");
-
+app.use("/",(err,_req,res,next)=>{
+  try{
+      if (err) {
+      if (err.statusCode){
+        res.status(err.statusCode).json({
+          type: err.type,
+        });
+      } else {
+        res.sendStatus(400);
+      }
+    } else {
+      next();
+    }
+  } catch(_) {
+    res.sendStatus(500);
+  }
+});
 app.use("/api/auth", UserRoutes);
-app.use("/api/todo", ToDoRoutes);
+app.use("/api/todo", middlewareObj.isLoggedIn,ToDoRoutes);
+
 
 const PORT = process.env.PORT || 8000;
 const mongoDB = "mongodb://127.0.0.1/my_database";
 
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
 mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
