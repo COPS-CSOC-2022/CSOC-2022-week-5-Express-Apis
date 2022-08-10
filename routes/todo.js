@@ -4,12 +4,13 @@ const { ToDoController } = require("../controllers");
 const router = Router();
 
 router.get("/",ToDoController.getAllToDo);
+router.post("/", ToDoController.createToDo);
 router.get("/:id",ToDoController.getParticularToDo);
 router.put("/:id",ToDoController.editToDo);
 router.patch("/:id",ToDoController.editToDoPatch);
 router.delete("/:id",ToDoController.deleteToDo);
-router.post("/addCollaborator/:id",ToDoController.addCollaborator);
-router.post("/", ToDoController.createToDo);
+router.delete("/:id/remove-collaborators/",ToDoController.removeCollaborator);
+router.post("/:id/add-collaborators/",ToDoController.addCollaborator);
 
 // TODO: Create the end points similarly
 module.exports = router;

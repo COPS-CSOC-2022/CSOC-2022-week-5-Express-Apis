@@ -27,7 +27,8 @@ const login = async (req, res) => {
         var check = await bcrypt.compare(req.body.pwd,user.password);
         if(check){
             let token = await Token.findOne({user:user._id});
-            return res.status(200).json(token);
+
+            return res.status(200).json({token:token.token});
         }
         else{
             return res.status(401).send("Enter correct username and password!");
@@ -52,7 +53,7 @@ const signup = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
     if (await User.findOne({ $or: [{ username: req.body.username }, { email: req.body.email }] })) {
-      return res.status(400).json({ error: "User with same username and email already exists" });
+      return res.status(400).json({ error: "User with same username or email already exists" });
     }
     const salt = await bcrypt.genSalt(10);
     const hashPass = await bcrypt.hash(req.body.pwd, salt);
@@ -68,7 +69,7 @@ const signup = async (req, res) => {
       console.log(newUser);
       let token = createToken(newUser);
       token.save();
-      return res.status(201).json(token);
+      return res.status(201).json({token:token.token});
     }).catch(err => console.error(err));
 
   } catch (err) {
@@ -98,7 +99,7 @@ const profile = async (req, res) => {
     return res.status(401).send({error:"Invalid Token"});
   }  
   else{
-    return res.status(200).json({name:foundUser.user.name,username:foundUser.user.username,email:foundUser.user.email});
+    return res.status(200).json({id:foundUser.user._id,name:foundUser.user.name,username:foundUser.user.username,email:foundUser.user.email});
   }
 };
 
