@@ -20,7 +20,7 @@ app.use("/api/auth", UserRoutes);
 app.use("/api/todo",checkUser,ToDoRoutes);
 
 const PORT = process.env.PORT || 8000;
-const mongoDB = "mongodb://127.0.0.1/my_database";
+const mongoDB = "mongodb://localhost:27017/my_database"; // MongoDB Compass
 
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
