@@ -20,7 +20,7 @@ const userSchema = new Schema(
       required: true,
       index: true,
     },
-    password: {
+    pwd: {
       type: String,
       required: true,
       index: true,
