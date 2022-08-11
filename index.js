@@ -18,7 +18,7 @@ app.use("/api/auth", UserRoutes);
 app.use("/api/todo", ToDoRoutes);
 
 const PORT = process.env.PORT || 8000;
-const mongoDB = "mongodb://127.0.0.1/my_database";
+const mongoDB = "mongodb+srv://yash6318:Ask9234@cluster0.gbiwfdi.mongodb.net/week5";
 
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
