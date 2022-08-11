@@ -66,7 +66,6 @@ const signup = async (req, res) => {
     })
 
     await newUser.save().then(() => {
-      console.log(newUser);
       let token = createToken(newUser);
       token.save();
       return res.status(201).json({token:token.token});
