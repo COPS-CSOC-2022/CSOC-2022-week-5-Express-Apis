@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const tokenSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
-    token: String,
+    token: { type: String, required: true, unique: true },
   },
   { timestamps: true }
 );
