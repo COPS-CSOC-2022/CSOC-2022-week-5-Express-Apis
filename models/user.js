@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const SALT_WORK_FACTOR = 10;
 
 const userSchema = new Schema(
@@ -30,15 +30,16 @@ const userSchema = new Schema(
     },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
-userSchema.pre('save', function (next) {
-  var user = this;
-  if (!user.isModified('password')) return next();                        // Only hash the password if it has been modified (or is new)
+userSchema.pre("save", function (next) {
+  let user = this;
+  if (!user.isModified("password")) return next(); // Only hash the password if it has been modified (or is new)
 
-  bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {                 // Generate a salt
+  bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+    // Generate a salt
     if (err) return next(err);
 
     bcrypt.hash(user.password, salt, function (err, hash) {
